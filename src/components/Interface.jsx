@@ -251,7 +251,7 @@ const ProjectsSection = () => {
 
   return (
     <Section>
-      <div className="flex w-full h-full text-teal-900 gap-8 items-center justify-center">
+      <div className="mt-40 flex w-full h-full text-teal-900 gap-8 items-center justify-center">
         {/* Botón para ir al proyecto anterior */}
         <button
           className="hover:text-teal-700 transition-colors"
@@ -359,6 +359,7 @@ const ContactSection = () => {
               id="message"
               required
               className="h-24 block w-full rounded-md border-0 text-teal-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 p-3"
+              style={{ resize: "none" }}
             />
             {/* Botón de envío */}
             <button className="bg-teal-700 text-white py-3 px-6 rounded-lg font-bold text-base mt-8 hover:bg-teal-900 transition-colors">
