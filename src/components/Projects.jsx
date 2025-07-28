@@ -9,34 +9,28 @@ import { useEffect, useRef } from "react"; // Hooks de React
 // Array de proyectos a mostrar
 export const projects = [
 	{
-		title: "Wawatmos",
-		url: "https://r3f-wawatmos-final.vercel.app/",
-		image: "projects/wawatmos.jpg",
-		description: "Recreating the Atmos Awwwards website with React Three Fiber",
+		title: "App Almacenaje",
+		url: "https://github.com/GermanVG7",
+		image: "projects/almacen.jpg",
+		description: "Final project of the Training course in Multiplatform Application Development",
 	},
 	{
-		title: "Portfolio Baking",
-		url: "https://www.youtube.com/watch?v=YkHqpqJgLKw",
-		image: "projects/baking.jpg",
-		description: "Learn how to bake a 3D model with Blender and use it in r3f",
+		title: "Web Lea Thieux",
+		url: "https://github.com/GermanVG7/WebArteLea.git",
+		image: "projects/WebLeaThieux.JPG",
+		description: "Prototype website for the artist Lea Thieux",
 	},
 	{
-		title: "3D Avatar",
-		url: "https://www.youtube.com/watch?v=pGMKIyALcK0",
-		image: "projects/avatar.jpg",
-		description: "Learn how to use ReadyPlayerMe to create a 3D avatar",
+		title: "Portfolio 3D",
+		url: "https://github.com/GermanVG7/Portfolio3D.git",
+		image: "projects/Portfolio-3D.JPG",
+		description: "Use React Three Fiber to create a 3D portfolio",
 	},
 	{
-		title: "Kanagame",
-		url: "https://www.youtube.com/watch?v=zwNF1-lsia8",
-		image: "projects/kanagame.jpg",
-		description: "Use React Three Fiber to create a 3D game",
-	},
-	{
-		title: "Loader",
-		url: "https://www.youtube.com/watch?v=L12wIvuZTOY",
-		image: "projects/loader.jpg",
-		description: "Create a loading screen for your r3f projects",
+		title: "DigitlandWP",
+		url: "https://github.com/GermanVG7/DigitlandWP.git",
+		image: "projects/DigiitlandWP.JPG",
+		description: "Project in WordPress with Timber and Twig",
 	},
 ];
 
@@ -65,33 +59,37 @@ const Project = (props) => {
 				onClick={() => window.open(project.url, "_blank")}
 				ref={background}
 			>
-				<planeGeometry args={[2.2, 2]} />
+				<planeGeometry args={[3, 2.5]} />
 				<meshBasicMaterial color="black" transparent opacity={0.4} />
 			</mesh>
 			{/* Imagen del proyecto */}
 			<Image
-				scale={[2, 1.2, 1]}
+				scale={[2.7, 1.7, 1]}
 				url={project.image}
 				toneMapped={false}
-				position-y={0.3}
+				position-y={0.5}
+				transparent
+				opacity={1}
+				fit="cover"
+				center={[0.5, 0.5]}
 			/>
 			{/* Título del proyecto */}
 			<Text
-				maxWidth={2}
+				maxWidth={2.7}
 				anchorX={"left"}
 				anchorY={"top"}
-				fontSize={0.2}
-				position={[-1, -0.4, 0]}
+				fontSize={0.28}
+				position={[-1.3, -0.5, 0]}
 			>
 				{project.title.toUpperCase()}
 			</Text>
 			{/* Descripción del proyecto */}
 			<Text
-				maxWidth={2}
+				maxWidth={2.7}
 				anchorX="left"
 				anchorY="top"
-				fontSize={0.1}
-				position={[-1, -0.6, 0]}
+				fontSize={0.14}
+				position={[-1.3, -0.8, 0]}
 			>
 				{project.description}
 			</Text>
@@ -114,9 +112,9 @@ export const Projects = () => {
 			{projects.map((project, index) => (
 				<motion.group
 					key={"project_" + index}
-					position={[index * 2.5, 0, -3]}
+					position={[index * 3.5, 0, -3]}
 					animate={{
-						x: 0 + (index - currentProject) * 2.5,
+						x: 0 + (index - currentProject) * 3.5,
 						y: currentProject === index ? 0 : -0.1,
 						z: currentProject === index ? -2 : -3,
 						rotateX: currentProject === index ? 0 : -Math.PI / 3,

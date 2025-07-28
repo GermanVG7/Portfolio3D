@@ -2,6 +2,8 @@
 import { motion } from "framer-motion"; // Animaciones para la interfaz
 import { useAtom } from "jotai"; // Estado global para proyectos
 import { currentProjectAtom, projects } from "./Projects"; // Datos de proyectos
+import emailjs from "emailjs-com";
+import { useState } from "react";
 
 // Componente de sección animada, reutilizable para cada bloque de la interfaz
 const Section = (props) => {
@@ -272,51 +274,105 @@ const ProjectsSection = () => {
 
 // Sección de contacto con formulario
 const ContactSection = () => {
+  const [status, setStatus] = useState("");
+
+  // Claves reales de EmailJS
+  const SERVICE_ID = "service_jcl3zms";
+  const TEMPLATE_ID = "template_j766oyk";
+  const PUBLIC_KEY = "AEcmMTaXzEYmNbGPO";
+
+  // Maneja el envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setStatus("");
+    const form = e.target;
+    // Mostrar los datos enviados para depuración
+    const formData = new FormData(form);
+    for (let [key, value] of formData.entries()) {
+      console.log(`Campo enviado: ${key} = ${value}`);
+    }
+    emailjs
+      .sendForm(SERVICE_ID, TEMPLATE_ID, form, PUBLIC_KEY)
+      .then(
+        (result) => {
+          setStatus("success");
+          form.reset();
+        },
+        (error) => {
+          setStatus("error");
+          console.error("EmailJS error:", error);
+        }
+      );
+  };
+
   return (
     <Section>
       <h2 className="text-5xl text-teal-700 font-bold">Contact me</h2>
-      <div className="mt-8 p-8 rounded-md bg-teal-100 w-96 max-w-full">
-        <form>
-          {/* Campo nombre */}
-          <label htmlFor="name" className="font-medium text-teal-700 block mb-1">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            className="block w-full rounded-md border-0 text-teal-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 p-3"
-          />
-          {/* Campo email */}
-          <label
-            htmlFor="email"
-            className="font-medium text-teal-700 block mb-1 mt-8"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            className="block w-full rounded-md border-0 text-teal-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 p-3"
-          />
-          {/* Campo mensaje */}
-          <label
-            htmlFor="email"
-            className="font-medium text-teal-700 block mb-1 mt-8"
-          >
-            Message
-          </label>
-          <textarea
-            name="message"
-            id="message"
-            className="h-32 block w-full rounded-md border-0 text-teal-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 p-3"
-          />
-          {/* Botón de envío */}
-          <button className="bg-teal-700 text-white py-4 px-8 rounded-lg font-bold text-lg mt-16 hover:bg-teal-900 transition-colors">
-            Submit
-          </button>
-        </form>
+      <div className="h-full w-full flex items-start justify-start">
+        <div className="p-6 rounded-md bg-teal-100 w-80 max-w-full flex flex-col justify-center mt-8">
+          <form onSubmit={handleSubmit} className="flex flex-col h-full justify-center">
+            {/* Campo nombre */}
+            <label htmlFor="name" className="font-medium text-teal-700 block mb-1">
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              required
+              className="block w-full rounded-md border-0 text-teal-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 p-3"
+            />
+            {/* Campo email */}
+            <label
+              htmlFor="email"
+              className="font-medium text-teal-700 block mb-1 mt-4"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              required
+              className="block w-full rounded-md border-0 text-teal-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 p-3"
+            />
+            {/* Campo asunto */}
+            <label htmlFor="subject" className="font-medium text-teal-700 block mb-1 mt-4">
+              Subject
+            </label>
+            <input
+              type="text"
+              name="subject"
+              id="subject"
+              required
+              className="block w-full rounded-md border-0 text-teal-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 p-3"
+            />
+            {/* Campo mensaje */}
+            <label
+              htmlFor="message"
+              className="font-medium text-teal-700 block mb-1 mt-4"
+            >
+              Message
+            </label>
+            <textarea
+              name="message"
+              id="message"
+              required
+              className="h-24 block w-full rounded-md border-0 text-teal-700 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 p-3"
+            />
+            {/* Botón de envío */}
+            <button className="bg-teal-700 text-white py-3 px-6 rounded-lg font-bold text-base mt-8 hover:bg-teal-900 transition-colors">
+              Submit
+            </button>
+            {/* Feedback visual */}
+            {status === "success" && (
+              <p className="text-green-600 mt-4">Message sent successfully!</p>
+            )}
+            {status === "error" && (
+              <p className="text-red-600 mt-4">Error sending message. Please try again.</p>
+            )}
+          </form>
+        </div>
       </div>
     </Section>
   );
